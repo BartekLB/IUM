@@ -2,6 +2,8 @@
 
 Projekt realizuje zadania z laboratorium „Środowisko pracy inżyniera uczenia maszynowego”.
 
+Repozytorium projektu: https://github.com/BartekLB/IUM
+
 ## Uruchomienie
 
 ```powershell
@@ -13,4 +15,3 @@ python src\ml_pipeline.py
 
 Pipeline korzysta z parametrów `DATA_PATH`, `TEST_SIZE` i `RANDOM_SEED` w pliku `.env`.
 Wyniki ewaluacji są zapisywane w `wyniki.txt`, a wytrenowany model lokalnie w `models/`.
-Inżyneiria uczenia maszynowego

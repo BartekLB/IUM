@@ -20,9 +20,22 @@ from sklearn.model_selection import train_test_split
 ROOT = Path(__file__).resolve().parents[1]
 load_dotenv(ROOT / ".env")
 
-DATA_PATH = ROOT / os.getenv("DATA_PATH", "data/iris.csv")
-TEST_SIZE = float(os.getenv("TEST_SIZE", "0.2"))
-RANDOM_SEED = int(os.getenv("RANDOM_SEED", "42"))
+data_path_value = os.getenv("DATA_PATH") or "data/iris.csv"
+DATA_PATH = Path(data_path_value).expanduser()
+if not DATA_PATH.is_absolute():
+    DATA_PATH = ROOT / DATA_PATH
+DATA_PATH = DATA_PATH.resolve()
+
+TEST_SIZE = float(os.getenv("TEST_SIZE") or "0.2")
+RANDOM_SEED = int(os.getenv("RANDOM_SEED") or "42")
+
+
+def data_path_for_report() -> str:
+    """Format the path safely whether it is inside or outside the project."""
+    try:
+        return DATA_PATH.relative_to(ROOT).as_posix()
+    except ValueError:
+        return DATA_PATH.as_posix()
 
 
 def load_data() -> pd.DataFrame:
@@ -69,7 +82,7 @@ def main() -> None:
     report = classification_report(y_test, predictions, target_names=["setosa", "versicolor", "virginica"])
     results = (
         "Konfiguracja\n"
-        f"DATA_PATH={DATA_PATH.relative_to(ROOT).as_posix()}\n"
+        f"DATA_PATH={data_path_for_report()}\n"
         f"TEST_SIZE={TEST_SIZE}\n"
         f"RANDOM_SEED={RANDOM_SEED}\n\n"
         "Eksploracja danych\n"
