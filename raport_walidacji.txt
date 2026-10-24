@@ -1,0 +1,63 @@
+RAPORT WALIDACJI LABORATORIUM 2
+Data wykonania: 18.10.2026
+
+Status końcowy
+[x] Projekt uruchamia się od początku do końca bez błędów.
+[x] Wyniki są generowane z jednego źródła danych: wyniki.json; wyniki.txt i DOCX korzystają z tych samych wartości.
+[x] Testy automatyczne: 13 passed, 0 failed.
+[x] Kod w dodatku DOCX jest identyczny ze src/ml_pipeline.py (693/693 linii) i przechodzi compile().
+[x] Wszystkie 23 strony DOCX wyrenderowano i skontrolowano wizualnie.
+
+Zgodność funkcjonalna
+[x] Iris: 150 rekordów, 4 cechy float32, 3 klasy, etykiety int64.
+[x] Jeden wspólny podział train/test: 120/30, stratify, random_state=42.
+[x] scikit-learn: Pipeline(StandardScaler, LogisticRegression(max_iter=1000, random_state=42)).
+[x] PyTorch: IrisNet 4-16-8-3, ReLU, CrossEntropyLoss, Adam, 80 epok.
+[x] 5-fold KFold(shuffle=True, random_state=42) na części treningowej.
+[x] Te same indeksy foldów dla obu modeli.
+[x] W każdym foldzie PyTorch powstają nowy scaler, model i optymalizator.
+[x] Learning rate wybrany wyłącznie na train spośród 0.001, 0.003, 0.005 i 0.010.
+[x] Holdout nie uczestniczy w wyborze learning rate.
+
+Kontrole metodologiczne i techniczne
+[x] StandardScaler w scikit-learn jest elementem Pipeline i dopasowuje się wewnątrz CV.
+[x] StandardScaler w PyTorch jest dopasowywany tylko na części treningowej danego foldu.
+[x] Train i validation są rozłączne w każdym foldzie.
+[x] Cechy tensorów: torch.float32; etykiety: torch.long.
+[x] Warstwa wyjściowa zwraca logity; brak Softmax przed CrossEntropyLoss.
+[x] Ewaluacja używa model.eval() oraz torch.no_grad().
+[x] Odchylenie standardowe CV: populacyjne, np.std(..., ddof=0).
+[x] Benchmark: CPU, perf_counter, 1 rozgrzewka, 5 pomiarów, mediana i IQR; predykcja poza pomiarem.
+[x] Ponowny pełny przebieg eksperymentu odtworzył wszystkie metryki jakości, foldy i wybór learning rate.
+
+Wybór learning rate na train
+lr=0.001: średnia CV 0.7167, std 0.1944, najgorszy fold 0.3333.
+lr=0.003: średnia CV 0.8667, std 0.0553, najgorszy fold 0.7917.
+lr=0.005: średnia CV 0.9000, std 0.0425, najgorszy fold 0.8333.
+lr=0.010: średnia CV 0.9250, std 0.0408, najgorszy fold 0.8750.
+Wybrano: learning_rate=0.010.
+
+Wyniki na wspólnym holdoucie
+scikit-learn: accuracy 0.9333, precision macro 0.9333, recall macro 0.9333, F1 macro 0.9333.
+PyTorch: accuracy 0.9667, precision macro 0.9697, recall macro 0.9667, F1 macro 0.9666.
+
+Walidacja krzyżowa
+scikit-learn: foldy 0.9583, 1.0000, 0.9167, 1.0000, 0.9583; średnia 0.9667; std 0.0312.
+PyTorch: foldy 0.9167, 1.0000, 0.9167, 0.9167, 0.8750; średnia 0.9250; std 0.0408.
+
+Czasy z zapisanego uruchomienia
+Trening scikit-learn: mediana 0.004480 s, IQR 0.000044 s.
+Trening PyTorch: mediana 0.046055 s, IQR 0.000304 s.
+Pełna CV scikit-learn: mediana 0.029458 s, IQR 0.000478 s.
+Pełna CV PyTorch: mediana 0.234009 s, IQR 0.001363 s.
+
+Ograniczenia interpretacyjne
+Zbiór Iris jest mały, a różnica jednej obserwacji na 30-elementowym holdoucie zmienia accuracy o 0.0333.
+Learning rate wybrano i zaraportowano na tych samych foldach treningowych, dlatego wynik CV PyTorch może być
+lekko optymistyczny. Holdout nie służył do strojenia, ale był oglądany we wcześniejszych iteracjach projektu.
+Czasy są miarodajne porównawczo dla tego komputera i uruchomienia, lecz nie są uniwersalną cechą bibliotek.
+
+Wniosek audytu
+Rozwiązanie spełnia wymagania instrukcji. Pipeline scikit-learn daje najwyższą średnią CV, mniejszą zmienność,
+krótszy czas i prostszą implementację. PyTorch uzyskuje wyższy pojedynczy wynik holdout oraz zapewnia większą
+kontrolę nad architekturą i treningiem, ale wymaga jawnego strojenia i większej ilości kodu.

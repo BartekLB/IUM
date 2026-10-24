@@ -1,0 +1,369 @@
+{
+  "dataset": {
+    "name": "Iris",
+    "records": 150,
+    "features": [
+      "sepal length (cm)",
+      "sepal width (cm)",
+      "petal length (cm)",
+      "petal width (cm)"
+    ],
+    "classes": 3,
+    "train_records": 120,
+    "test_records": 30,
+    "random_state": 42,
+    "stratified": true
+  },
+  "configuration": {
+    "sklearn": {
+      "pipeline": [
+        "StandardScaler",
+        "LogisticRegression"
+      ],
+      "max_iter": 1000
+    },
+    "pytorch": {
+      "architecture": [
+        4,
+        16,
+        8,
+        3
+      ],
+      "activation": "ReLU",
+      "loss": "CrossEntropyLoss",
+      "optimizer": "Adam",
+      "epochs": 80,
+      "learning_rate_candidates": [
+        0.001,
+        0.003,
+        0.005,
+        0.01
+      ],
+      "selected_learning_rate": 0.01,
+      "selection_scope": "5-fold CV wyłącznie na train; holdout nie uczestniczył w wyborze"
+    },
+    "cross_validation": {
+      "method": "KFold",
+      "n_splits": 5,
+      "shuffle": true,
+      "random_state": 42,
+      "scope": "train only",
+      "std_ddof": 0
+    },
+    "benchmark": {
+      "timer": "time.perf_counter",
+      "warmup_runs": 1,
+      "measured_repetitions": 5,
+      "reported_statistic": "median and IQR",
+      "scope": "przygotowanie danych i trening; predykcja poza pomiarem",
+      "device": "CPU"
+    }
+  },
+  "environment": {
+    "python": "3.11.9",
+    "numpy": "2.4.6",
+    "scikit_learn": "1.9.1",
+    "pytorch": "2.9.0+cpu",
+    "processor": "Intel64 Family 6 Model 141 Stepping 1, GenuineIntel"
+  },
+  "holdout": {
+    "scikit_learn": {
+      "accuracy": 0.9333333333333333,
+      "precision_macro": 0.9333333333333332,
+      "recall_macro": 0.9333333333333332,
+      "f1_macro": 0.9333333333333332,
+      "training_time": {
+        "median_s": 0.004480499999772292,
+        "iqr_s": 4.430000262800604e-05,
+        "repetitions": 5
+      }
+    },
+    "pytorch": {
+      "accuracy": 0.9666666666666667,
+      "precision_macro": 0.9696969696969697,
+      "recall_macro": 0.9666666666666667,
+      "f1_macro": 0.9665831244778612,
+      "training_time": {
+        "median_s": 0.04605520000040997,
+        "iqr_s": 0.00030390000392799266,
+        "repetitions": 5
+      }
+    }
+  },
+  "cross_validation": {
+    "scikit_learn": {
+      "fold_scores": [
+        0.9583333333333334,
+        1.0,
+        0.9166666666666666,
+        1.0,
+        0.9583333333333334
+      ],
+      "mean": 0.9666666666666666,
+      "std": 0.031180478223116186,
+      "total_time": {
+        "median_s": 0.029458499997417675,
+        "iqr_s": 0.00047810000251047313,
+        "repetitions": 5
+      },
+      "fold_diagnostics": []
+    },
+    "pytorch": {
+      "fold_scores": [
+        0.9166666666666666,
+        1.0,
+        0.9166666666666666,
+        0.9166666666666666,
+        0.875
+      ],
+      "mean": 0.925,
+      "std": 0.040824829046386304,
+      "total_time": {
+        "median_s": 0.23400910000054864,
+        "iqr_s": 0.0013632000009238254,
+        "repetitions": 5
+      },
+      "fold_diagnostics": [
+        {
+          "fold": 1,
+          "seed": 43,
+          "initial_loss": 1.0989282131195068,
+          "final_loss": 0.01679552160203457,
+          "training_accuracy": 1.0,
+          "validation_accuracy": 0.9166666666666666,
+          "predicted_class_counts": [
+            8,
+            9,
+            7
+          ]
+        },
+        {
+          "fold": 2,
+          "seed": 44,
+          "initial_loss": 1.15803062915802,
+          "final_loss": 0.05201790854334831,
+          "training_accuracy": 0.9791666666666666,
+          "validation_accuracy": 1.0,
+          "predicted_class_counts": [
+            7,
+            8,
+            9
+          ]
+        },
+        {
+          "fold": 3,
+          "seed": 45,
+          "initial_loss": 1.1295835971832275,
+          "final_loss": 0.05288088694214821,
+          "training_accuracy": 0.9791666666666666,
+          "validation_accuracy": 0.9166666666666666,
+          "predicted_class_counts": [
+            8,
+            5,
+            11
+          ]
+        },
+        {
+          "fold": 4,
+          "seed": 46,
+          "initial_loss": 1.2018601894378662,
+          "final_loss": 0.05568632483482361,
+          "training_accuracy": 0.9791666666666666,
+          "validation_accuracy": 0.9166666666666666,
+          "predicted_class_counts": [
+            7,
+            10,
+            7
+          ]
+        },
+        {
+          "fold": 5,
+          "seed": 47,
+          "initial_loss": 1.0897445678710938,
+          "final_loss": 0.033799052238464355,
+          "training_accuracy": 0.9791666666666666,
+          "validation_accuracy": 0.875,
+          "predicted_class_counts": [
+            9,
+            9,
+            6
+          ]
+        }
+      ]
+    }
+  },
+  "learning_rate_search": [
+    {
+      "learning_rate": 0.001,
+      "fold_scores": [
+        0.7916666666666666,
+        0.875,
+        0.7916666666666666,
+        0.3333333333333333,
+        0.7916666666666666
+      ],
+      "mean": 0.7166666666666666,
+      "std": 0.19436506316151003
+    },
+    {
+      "learning_rate": 0.003,
+      "fold_scores": [
+        0.875,
+        0.9583333333333334,
+        0.8333333333333334,
+        0.7916666666666666,
+        0.875
+      ],
+      "mean": 0.8666666666666668,
+      "std": 0.05527707983925668
+    },
+    {
+      "learning_rate": 0.005,
+      "fold_scores": [
+        0.9166666666666666,
+        0.9583333333333334,
+        0.8333333333333334,
+        0.9166666666666666,
+        0.875
+      ],
+      "mean": 0.9,
+      "std": 0.042491829279939865
+    },
+    {
+      "learning_rate": 0.01,
+      "fold_scores": [
+        0.9166666666666666,
+        1.0,
+        0.9166666666666666,
+        0.9166666666666666,
+        0.875
+      ],
+      "mean": 0.925,
+      "std": 0.040824829046386304
+    }
+  ],
+  "final_pytorch_training": {
+    "initial_loss": 1.0959773063659668,
+    "final_loss": 0.03982485830783844,
+    "training_accuracy": 0.9833333333333333,
+    "loss_history": [
+      1.0959773063659668,
+      1.0727827548980713,
+      1.0502922534942627,
+      1.0260155200958252,
+      0.9993672966957092,
+      0.9705827832221985,
+      0.9395828247070312,
+      0.9068366885185242,
+      0.8719756007194519,
+      0.8347011208534241,
+      0.7953565716743469,
+      0.7545665502548218,
+      0.7128648161888123,
+      0.6707409024238586,
+      0.6288370490074158,
+      0.5878145694732666,
+      0.5481484532356262,
+      0.5103615522384644,
+      0.4747055172920227,
+      0.44138669967651367,
+      0.4104621708393097,
+      0.38209161162376404,
+      0.35667699575424194,
+      0.3342673182487488,
+      0.31454092264175415,
+      0.2972864806652069,
+      0.2819829285144806,
+      0.26788321137428284,
+      0.2546542286872864,
+      0.24211612343788147,
+      0.23035970330238342,
+      0.21962323784828186,
+      0.2098567932844162,
+      0.2005951851606369,
+      0.19141291081905365,
+      0.1820937544107437,
+      0.17291083931922913,
+      0.16406850516796112,
+      0.15564997494220734,
+      0.14753590524196625,
+      0.1395605504512787,
+      0.13173942267894745,
+      0.12427929043769836,
+      0.11732756346464157,
+      0.11091563105583191,
+      0.1049218624830246,
+      0.09927143901586533,
+      0.09402946382761002,
+      0.08930348604917526,
+      0.08508531004190445,
+      0.08125405758619308,
+      0.0776718407869339,
+      0.07437115162611008,
+      0.07139077037572861,
+      0.06864411383867264,
+      0.06608079373836517,
+      0.06368096172809601,
+      0.061464421451091766,
+      0.05945340543985367,
+      0.05765533447265625,
+      0.05606700852513313,
+      0.0546366311609745,
+      0.053339406847953796,
+      0.05217105150222778,
+      0.05111752450466156,
+      0.05013967305421829,
+      0.04920433834195137,
+      0.04829870164394379,
+      0.04742821678519249,
+      0.04658961668610573,
+      0.045777007937431335,
+      0.04499184340238571,
+      0.04423723742365837,
+      0.04352324455976486,
+      0.0428585484623909,
+      0.04224565997719765,
+      0.041679900139570236,
+      0.041157644242048264,
+      0.04067779332399368,
+      0.0402374342083931
+    ]
+  },
+  "complexity": {
+    "method": "Niepuste linie wraz z komentarzami i docstringami; bez kodu wspólnego.",
+    "common_components": [
+      "load_dataset",
+      "split_dataset",
+      "calculate_metrics",
+      "benchmark",
+      "zapis wyników"
+    ],
+    "scikit_learn": {
+      "nonempty_lines": 34,
+      "functions": 4,
+      "custom_classes": 0,
+      "hyperparameters": [
+        "max_iter=1000",
+        "random_state=42"
+      ],
+      "preprocessing": "StandardScaler wewnątrz Pipeline",
+      "training": "fit",
+      "validation": "cross_val_score z KFold"
+    },
+    "pytorch": {
+      "nonempty_lines": 158,
+      "functions": 6,
+      "custom_classes": 1,
+      "hyperparameters": [
+        "warstwy 16 i 8",
+        "learning_rate=0.010",
+        "epochs=80",
+        "Adam"
+      ],
+      "preprocessing": "Osobny StandardScaler w każdym treningu",
+      "training": "Ręczna pętla forward/backward/step",
+      "validation": "Ręczna pętla KFold i nowe wagi"
+    }
+  },
+  "methodological_note": "Learning rate wybrano na podstawie tych samych foldów treningowych, dlatego wynik CV wybranej konfiguracji może być umiarkowanie optymistyczny. Holdout nie został użyty do doboru hiperparametru, ale był oceniany we wcześniejszych iteracjach projektu."
+}

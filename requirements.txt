@@ -9,4 +9,6 @@ scikit-learn==1.9.1
 scipy==1.17.1
 six==1.17.0
 threadpoolctl==3.7.0
+torch==2.9.0
+pytest==8.4.2
 tzdata==2026.5
