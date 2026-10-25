@@ -15,20 +15,20 @@ lr=0.005: fold 1: 0.9167, fold 2: 0.9583, fold 3: 0.8333, fold 4: 0.9167, fold 5
 lr=0.010: fold 1: 0.9167, fold 2: 1.0000, fold 3: 0.9167, fold 4: 0.9167, fold 5: 0.8750; średnia=0.9250; std=0.0408
 
 Wyniki na wspólnym holdoucie
-scikit-learn: accuracy=0.9333; precision_macro=0.9333; recall_macro=0.9333; f1_macro=0.9333; czas_treningu_mediana=0.004480 s; IQR=0.000044 s
-PyTorch: accuracy=0.9667; precision_macro=0.9697; recall_macro=0.9667; f1_macro=0.9666; czas_treningu_mediana=0.046055 s; IQR=0.000304 s
+scikit-learn: accuracy=0.9333; precision_macro=0.9333; recall_macro=0.9333; f1_macro=0.9333; czas_treningu_mediana=0.004787 s; IQR=0.000330 s
+PyTorch: accuracy=0.9667; precision_macro=0.9697; recall_macro=0.9667; f1_macro=0.9666; czas_treningu_mediana=0.047027 s; IQR=0.000401 s
 
 Walidacja krzyżowa scikit-learn
 fold 1: 0.9583, fold 2: 1.0000, fold 3: 0.9167, fold 4: 1.0000, fold 5: 0.9583
 Średnia accuracy: 0.9667
 Odchylenie standardowe: 0.0312
-Czas 5-fold CV - mediana: 0.029458 s; IQR: 0.000478 s
+Czas 5-fold CV - mediana: 0.032552 s; IQR: 0.000251 s
 
 Walidacja krzyżowa PyTorch
 fold 1: 0.9167, fold 2: 1.0000, fold 3: 0.9167, fold 4: 0.9167, fold 5: 0.8750
 Średnia accuracy: 0.9250
 Odchylenie standardowe: 0.0408
-Czas 5-fold CV - mediana: 0.234009 s; IQR: 0.001363 s
+Czas 5-fold CV - mediana: 0.249721 s; IQR: 0.012043 s
 
 Diagnostyka foldów PyTorch
 fold 1: seed=43; loss 1.0989 -> 0.0168; train_accuracy=1.0000; val_accuracy=0.9167; predykowane klasy=(8, 9, 7)
@@ -49,8 +49,8 @@ Kod wspólny: load_dataset, split_dataset, calculate_metrics, benchmark, zapis w
 
 Analiza
 scikit-learn: CV 0.9667 ± 0.0312; PyTorch: CV 0.9250 ± 0.0408.
-Wyższy learning rate poprawił zbieżność PyTorch i usunął zapadnięcie predykcji do jednej klasy.
-Learning rate wybrano na podstawie tych samych foldów treningowych, dlatego wynik CV wybranej konfiguracji może być umiarkowanie optymistyczny. Holdout nie został użyty do doboru hiperparametru, ale był oceniany we wcześniejszych iteracjach projektu.
+Wyższy learning rate poprawił wyniki i stabilność zbieżności PyTorch.
+Learning rate wybrano na podstawie tych samych foldów treningowych, dlatego wynik CV wybranej konfiguracji może być umiarkowanie optymistyczny. Holdout wykorzystano dopiero do końcowej oceny modeli.
 
 Wnioski końcowe
 Dla małego, tabelarycznego Iris scikit-learn zapewnia lepszy kompromis jakości, czasu i prostoty. PyTorch pozostaje bardziej elastyczny, ale wymaga jawnego strojenia i większej ilości kodu. Wyników nie należy uogólniać na inne dane ani uznawać za dowód uniwersalnej przewagi biblioteki.

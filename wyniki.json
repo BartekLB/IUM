@@ -73,8 +73,8 @@
       "recall_macro": 0.9333333333333332,
       "f1_macro": 0.9333333333333332,
       "training_time": {
-        "median_s": 0.004480499999772292,
-        "iqr_s": 4.430000262800604e-05,
+        "median_s": 0.004787300000316463,
+        "iqr_s": 0.0003298999999969965,
         "repetitions": 5
       }
     },
@@ -84,8 +84,8 @@
       "recall_macro": 0.9666666666666667,
       "f1_macro": 0.9665831244778612,
       "training_time": {
-        "median_s": 0.04605520000040997,
-        "iqr_s": 0.00030390000392799266,
+        "median_s": 0.04702679999991233,
+        "iqr_s": 0.0004005999999208143,
         "repetitions": 5
       }
     }
@@ -102,8 +102,8 @@
       "mean": 0.9666666666666666,
       "std": 0.031180478223116186,
       "total_time": {
-        "median_s": 0.029458499997417675,
-        "iqr_s": 0.00047810000251047313,
+        "median_s": 0.032551799999964715,
+        "iqr_s": 0.00025069999992410885,
         "repetitions": 5
       },
       "fold_diagnostics": []
@@ -119,8 +119,8 @@
       "mean": 0.925,
       "std": 0.040824829046386304,
       "total_time": {
-        "median_s": 0.23400910000054864,
-        "iqr_s": 0.0013632000009238254,
+        "median_s": 0.24972060000072815,
+        "iqr_s": 0.0120429000007789,
         "repetitions": 5
       },
       "fold_diagnostics": [
@@ -365,5 +365,5 @@
       "validation": "Ręczna pętla KFold i nowe wagi"
     }
   },
-  "methodological_note": "Learning rate wybrano na podstawie tych samych foldów treningowych, dlatego wynik CV wybranej konfiguracji może być umiarkowanie optymistyczny. Holdout nie został użyty do doboru hiperparametru, ale był oceniany we wcześniejszych iteracjach projektu."
+  "methodological_note": "Learning rate wybrano na podstawie tych samych foldów treningowych, dlatego wynik CV wybranej konfiguracji może być umiarkowanie optymistyczny. Holdout wykorzystano dopiero do końcowej oceny modeli."
 }

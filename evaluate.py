@@ -46,6 +46,7 @@ def evaluate_saved_model() -> tuple[float, str, Path]:
 
     results_path = ROOT / required_setting("RESULTS_PATH")
     output = f"Accuracy: {accuracy:.4f}\n\nClassification report:\n{report}"
+    results_path.parent.mkdir(parents=True, exist_ok=True)
     results_path.write_text(output, encoding="utf-8")
     return accuracy, report, results_path
 

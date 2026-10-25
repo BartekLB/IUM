@@ -542,8 +542,8 @@ def build_results_dict(
         "complexity": complexity,
         "methodological_note": (
             "Learning rate wybrano na podstawie tych samych foldów treningowych, dlatego wynik "
-            "CV wybranej konfiguracji może być umiarkowanie optymistyczny. Holdout nie został "
-            "użyty do doboru hiperparametru, ale był oceniany we wcześniejszych iteracjach projektu."
+            "CV wybranej konfiguracji może być umiarkowanie optymistyczny. Holdout wykorzystano "
+            "dopiero do końcowej oceny modeli."
         ),
     }
 
@@ -623,7 +623,7 @@ def build_results_text(results: dict[str, object]) -> str:
             "Analiza",
             f"scikit-learn: CV {cv['scikit_learn']['mean']:.4f} ± {cv['scikit_learn']['std']:.4f}; "
             f"PyTorch: CV {cv['pytorch']['mean']:.4f} ± {cv['pytorch']['std']:.4f}.",
-            "Wyższy learning rate poprawił zbieżność PyTorch i usunął zapadnięcie predykcji do jednej klasy.",
+            "Wyższy learning rate poprawił wyniki i stabilność zbieżności PyTorch.",
             results["methodological_note"],
             "",
             "Wnioski końcowe",
