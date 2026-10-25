@@ -2,6 +2,7 @@
 __pycache__/
 .pytest_cache/
 tmp/
+tools/
 *.py[cod]
 .env
 models/*.joblib
